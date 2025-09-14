@@ -79,8 +79,9 @@
                                 <label for="sellerEmail" class="block text-sm font-medium text-gray-700">אימייל</label>
                                 <input type="email" id="sellerEmail" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 text-sm" required>
                             </div>
-                            <div class="md:col-span-2">
-                                 <button type="button" id="save-seller-details-btn" class="w-full mt-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition-colors text-sm">שמור את הפרטים שלי</button>
+                            <div class="md:col-span-2 flex gap-2 mt-2">
+                                 <button type="button" id="save-seller-details-btn" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition-colors text-sm">שמור את הפרטים שלי</button>
+                                 <button type="button" id="restore-defaults-btn" class="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-2 px-4 rounded-lg transition-colors text-sm">שחזר לברירת מחדל</button>
                             </div>
                         </div>
                     </fieldset>
@@ -173,6 +174,7 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
             const invoiceForm = document.getElementById('invoice-form');
             const formTitle = document.getElementById('form-title');
             const newInvoiceBtn = document.getElementById('new-invoice-btn');
@@ -188,25 +190,32 @@
             const printInvoiceBtn = document.getElementById('print-invoice-btn');
             const invoiceHistoryContainer = document.getElementById('invoice-history');
             const saveSellerDetailsBtn = document.getElementById('save-seller-details-btn');
+            const restoreDefaultsBtn = document.getElementById('restore-defaults-btn');
             
+            // --- State and Constants ---
             let currentEditingId = null;
             const SELLER_INFO_KEY = 'sellerInfo';
+            const DEFAULT_SELLER_INFO = {
+                name: 'היי קלאס',
+                address: 'המגינים 14 כניסה 2, גן יבנה',
+                phone: '050-6784018',
+                email: 'mkless@gmail.com',
+                businessNumber: '029538576'
+            };
 
             // --- Seller Details Management ---
+            function populateSellerForm(info) {
+                document.getElementById('sellerName').value = info.name;
+                document.getElementById('sellerAddress').value = info.address;
+                document.getElementById('sellerPhone').value = info.phone;
+                document.getElementById('sellerEmail').value = info.email;
+                document.getElementById('sellerBusinessNumber').value = info.businessNumber;
+            }
+
             function loadSellerDetails() {
                 const savedInfo = localStorage.getItem(SELLER_INFO_KEY);
-                const sellerInfo = savedInfo ? JSON.parse(savedInfo) : {
-                    name: 'היי קלאס',
-                    address: 'המגינים 14, כניסה 2, גן יבנה',
-                    phone: '050-6784018',
-                    email: 'mkless@gmail.com',
-                    businessNumber: '029538576'
-                };
-                document.getElementById('sellerName').value = sellerInfo.name;
-                document.getElementById('sellerAddress').value = sellerInfo.address;
-                document.getElementById('sellerPhone').value = sellerInfo.phone;
-                document.getElementById('sellerEmail').value = sellerInfo.email;
-                document.getElementById('sellerBusinessNumber').value = sellerInfo.businessNumber;
+                const sellerInfo = savedInfo ? JSON.parse(savedInfo) : DEFAULT_SELLER_INFO;
+                populateSellerForm(sellerInfo);
             }
 
             function saveSellerDetails() {
@@ -228,8 +237,16 @@
                 }, 2000);
             }
             
+            function restoreDefaultSellerDetails() {
+                if (confirm('האם לשחזר את פרטי העסק לברירת המחדל? שינויים שלא נשמרו יאבדו.')) {
+                    populateSellerForm(DEFAULT_SELLER_INFO);
+                }
+            }
+            
             saveSellerDetailsBtn.addEventListener('click', saveSellerDetails);
+            restoreDefaultsBtn.addEventListener('click', restoreDefaultSellerDetails);
 
+            // --- Invoice Class Manager ---
             class InvoiceManager {
                 constructor() {
                     this.invoices = JSON.parse(localStorage.getItem('invoices')) || [];
@@ -278,6 +295,7 @@
 
             const invoiceManager = new InvoiceManager();
 
+            // --- UI and Form Logic ---
             function calculateTotals() {
                 let total = 0;
                 invoiceItems.querySelectorAll('tr').forEach(row => {
@@ -378,8 +396,9 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
+            // --- Print Logic ---
             function generatePrintContent(invoice) {
-                const sellerInfo = JSON.parse(localStorage.getItem(SELLER_INFO_KEY));
+                const sellerInfo = JSON.parse(localStorage.getItem(SELLER_INFO_KEY)) || DEFAULT_SELLER_INFO;
 
                  const itemsHtml = invoice.items.map(item => `
                     <tr class="border-b">
@@ -466,7 +485,7 @@
                 `;
             }
 
-            // Event Listeners
+            // --- Main Event Listeners ---
             addItemBtn.addEventListener('click', () => createItemRow());
 
             invoiceForm.addEventListener('submit', (e) => {
@@ -545,7 +564,7 @@
                 }
             });
 
-            // Initial Load
+            // --- Initial Load ---
             loadSellerDetails();
             resetForm();
             renderInvoiceHistory();
