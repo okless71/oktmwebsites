@@ -2,7 +2,7 @@
   "name": "invoice-app-with-react",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://okless71.github.io/oktmwebsites/hesh",
+  "homepage": "okless71.github.io/oktmwebsites/hesh/",
   "type": "module",
   "scripts": {
     "dev": "vite",
