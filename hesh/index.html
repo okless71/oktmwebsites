@@ -464,7 +464,7 @@
                 return `
                     <html lang="he" dir="rtl">
                     <head>
-                        <title>חשבונית מס #${invoice.number}</title>
+                        <title>חשבונית עסקה #${invoice.number}</title>
                         <script src="https://cdn.tailwindcss.com"><\/script>
                         <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;700&display=swap" rel="stylesheet">
                         <style>
@@ -481,7 +481,7 @@
                             ${canceledWatermark}
                             <header class="flex justify-between items-start pb-6 border-b">
                                 <div>
-                                    <h1 class="text-4xl font-bold text-gray-800">חשבונית מס</h1>
+                                    <h1 class="text-4xl font-bold text-gray-800">חשבונית עסקה</h1>
                                     <p class="text-xs text-gray-500">העתק נאמן למקור</p>
                                     <p class="text-gray-500 mt-2"><span class="font-semibold">מספר:</span> ${invoice.number}</p>
                                     <p class="text-gray-500"><span class="font-semibold">תאריך:</span> ${new Date(invoice.date).toLocaleDateString('he-IL')}</p>
