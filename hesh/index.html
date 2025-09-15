@@ -60,15 +60,19 @@
                     <fieldset class="p-4 border border-gray-200 rounded-lg">
                         <legend class="text-lg font-semibold px-2">הפרטים שלי</legend>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3 mt-2">
-                            <div>
-                                <label for="sellerName" class="block text-sm font-medium text-gray-700">שם העסק</label>
-                                <input type="text" id="sellerName" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 text-sm" required>
+                             <div class="md:col-span-2 flex items-center gap-4">
+                                <img src="images/logo.gif" alt="לוגו העסק" class="h-12 w-12 object-contain rounded-full border bg-gray-100" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                                <div class="hidden h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs text-center">אין לוגו</div>
+                                <div class="flex-grow">
+                                    <label for="sellerName" class="block text-sm font-medium text-gray-700">שם העסק</label>
+                                    <input type="text" id="sellerName" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 text-sm" required>
+                                </div>
                             </div>
                             <div>
                                 <label for="sellerBusinessNumber" class="block text-sm font-medium text-gray-700">מספר עוסק</label>
                                 <input type="text" id="sellerBusinessNumber" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 text-sm" required>
                             </div>
-                             <div class="md:col-span-2">
+                             <div class="">
                                 <label for="sellerAddress" class="block text-sm font-medium text-gray-700">כתובת</label>
                                 <input type="text" id="sellerAddress" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 text-sm" required>
                             </div>
@@ -81,7 +85,7 @@
                                 <input type="email" id="sellerEmail" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 text-sm" required>
                             </div>
                             <div class="md:col-span-2 flex gap-2 mt-2">
-                                 <button type="button" id="save-seller-details-btn" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition-colors text-sm">שמור את הפרטים שלי</button>
+                                 <button type="button" id="save-seller-details-btn" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition-colors text-sm">שמור את פרטי ברירת המחדל</button>
                                  <button type="button" id="restore-defaults-btn" class="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-2 px-4 rounded-lg transition-colors text-sm">שחזר לברירת מחדל</button>
                             </div>
                         </div>
@@ -131,20 +135,32 @@
                         <button type="button" id="add-item-btn" class="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">+ הוסף פריט</button>
                     </div>
 
-                    <!-- Payment and Totals -->
-                     <div class="flex justify-between items-end mt-6">
-                         <div>
-                            <label for="payment-method" class="block text-sm font-medium text-gray-700">אמצעי תשלום</label>
-                            <select id="payment-method" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
-                                <option>אשראי</option>
-                                <option>מזומן</option>
-                                <option>העברה בנקאית</option>
-                                <option>צ'ק</option>
-                                <option>ביט</option>
-                                <option>אחר</option>
-                            </select>
+                    <!-- Payment, Notes and Totals -->
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end mt-6">
+                         <div class="space-y-4">
+                            <div class="flex gap-2">
+                                <div class="flex-grow">
+                                    <label for="payment-method" class="block text-sm font-medium text-gray-700">אמצעי תשלום</label>
+                                    <select id="payment-method" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                                        <option>אשראי</option>
+                                        <option>מזומן</option>
+                                        <option>העברה בנקאית</option>
+                                        <option>צ'ק</option>
+                                        <option>ביט</option>
+                                        <option>אחר</option>
+                                    </select>
+                                </div>
+                                <div class="flex-grow">
+                                    <label for="payment-details" class="block text-sm font-medium text-gray-700">פרטי תשלום</label>
+                                    <input type="text" id="payment-details" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 text-sm" placeholder="מספר צ'ק, 4 ספרות אחרונות...">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="invoice-notes" class="block text-sm font-medium text-gray-700">הערות (אופציונלי)</label>
+                                <textarea id="invoice-notes" rows="2" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2" placeholder="הערות לחשבונית שיוצגו בהדפסה"></textarea>
+                            </div>
                         </div>
-                        <div class="w-full max-w-sm space-y-2 text-left">
+                        <div class="w-full max-w-sm space-y-2 text-left ml-auto">
                              <div class="flex justify-between text-lg">
                                 <span class="font-semibold">סה"כ</span>
                                 <span id="total-amount" class="font-bold">0.00 ₪</span>
@@ -184,6 +200,8 @@
             const clientNameInput = document.getElementById('client-name');
             const clientAddressInput = document.getElementById('client-address');
             const paymentMethodInput = document.getElementById('payment-method');
+            const paymentDetailsInput = document.getElementById('payment-details');
+            const invoiceNotesInput = document.getElementById('invoice-notes');
             const invoiceItems = document.getElementById('invoice-items');
             const addItemBtn = document.getElementById('add-item-btn');
             const totalAmountSpan = document.getElementById('total-amount');
@@ -205,6 +223,16 @@
             };
 
             // --- Seller Details Management ---
+            function getSellerInfoFromForm() {
+                return {
+                    name: document.getElementById('sellerName').value.trim(),
+                    address: document.getElementById('sellerAddress').value.trim(),
+                    phone: document.getElementById('sellerPhone').value.trim(),
+                    email: document.getElementById('sellerEmail').value.trim(),
+                    businessNumber: document.getElementById('sellerBusinessNumber').value.trim()
+                };
+            }
+
             function populateSellerForm(info) {
                 document.getElementById('sellerName').value = info.name;
                 document.getElementById('sellerAddress').value = info.address;
@@ -213,26 +241,20 @@
                 document.getElementById('sellerBusinessNumber').value = info.businessNumber;
             }
 
-            function loadSellerDetails() {
+            function loadDefaultSellerDetails() {
                 const savedInfo = localStorage.getItem(SELLER_INFO_KEY);
                 const sellerInfo = savedInfo ? JSON.parse(savedInfo) : DEFAULT_SELLER_INFO;
                 populateSellerForm(sellerInfo);
             }
 
-            function saveSellerDetails() {
-                const sellerInfo = {
-                    name: document.getElementById('sellerName').value.trim(),
-                    address: document.getElementById('sellerAddress').value.trim(),
-                    phone: document.getElementById('sellerPhone').value.trim(),
-                    email: document.getElementById('sellerEmail').value.trim(),
-                    businessNumber: document.getElementById('sellerBusinessNumber').value.trim()
-                };
+            function saveDefaultSellerDetails() {
+                const sellerInfo = getSellerInfoFromForm();
                 localStorage.setItem(SELLER_INFO_KEY, JSON.stringify(sellerInfo));
                 saveSellerDetailsBtn.textContent = 'הפרטים נשמרו!';
                 saveSellerDetailsBtn.classList.remove('bg-gray-200', 'hover:bg-gray-300');
                 saveSellerDetailsBtn.classList.add('bg-green-500', 'text-white');
                 setTimeout(() => { 
-                    saveSellerDetailsBtn.textContent = 'שמור את הפרטים שלי';
+                    saveSellerDetailsBtn.textContent = 'שמור את פרטי ברירת המחדל';
                     saveSellerDetailsBtn.classList.remove('bg-green-500', 'text-white');
                     saveSellerDetailsBtn.classList.add('bg-gray-200', 'hover:bg-gray-300');
                 }, 2000);
@@ -241,10 +263,11 @@
             function restoreDefaultSellerDetails() {
                 if (confirm('האם לשחזר את פרטי העסק לברירת המחדל? שינויים שלא נשמרו יאבדו.')) {
                     populateSellerForm(DEFAULT_SELLER_INFO);
+                    localStorage.setItem(SELLER_INFO_KEY, JSON.stringify(DEFAULT_SELLER_INFO));
                 }
             }
             
-            saveSellerDetailsBtn.addEventListener('click', saveSellerDetails);
+            saveSellerDetailsBtn.addEventListener('click', saveDefaultSellerDetails);
             restoreDefaultsBtn.addEventListener('click', restoreDefaultSellerDetails);
 
             // --- Invoice Class Manager ---
@@ -370,6 +393,7 @@
                 createItemRow();
                 invoiceNumberInput.value = invoiceManager.getNextInvoiceNumber();
                 invoiceDateInput.valueAsDate = new Date();
+                loadDefaultSellerDetails(); // Load default seller info for new invoice
                 calculateTotals();
                 formTitle.textContent = 'יצירת חשבונית חדשה';
                 newInvoiceBtn.classList.add('hidden');
@@ -380,15 +404,31 @@
                 const invoice = invoiceManager.getInvoiceById(id);
                 if (!invoice) return;
                 
-                resetForm();
+                resetForm(); // Reset first to clear everything
                 currentEditingId = id;
+
+                // Load seller details from the specific invoice
+                // Fallback to default if the invoice is an old one without saved seller info
+                const sellerInfoForInvoice = invoice.sellerInfo || JSON.parse(localStorage.getItem(SELLER_INFO_KEY)) || DEFAULT_SELLER_INFO;
+                populateSellerForm(sellerInfoForInvoice);
+
+                // Load invoice details
                 invoiceNumberInput.value = invoice.number;
                 invoiceDateInput.value = invoice.date;
                 clientNameInput.value = invoice.clientName;
                 clientAddressInput.value = invoice.clientAddress || '';
                 paymentMethodInput.value = invoice.paymentMethod || 'אשראי';
+                paymentDetailsInput.value = invoice.paymentDetails || '';
+                invoiceNotesInput.value = invoice.notes || '';
+                
+                // Load items
                 invoiceItems.innerHTML = '';
-                invoice.items.forEach(item => createItemRow(item));
+                if (invoice.items && invoice.items.length > 0) {
+                    invoice.items.forEach(item => createItemRow(item));
+                } else {
+                    createItemRow();
+                }
+                
                 calculateTotals();
                 
                 formTitle.textContent = `עריכת חשבונית #${invoice.number}`;
@@ -399,7 +439,7 @@
 
             // --- Print Logic ---
             function generatePrintContent(invoice) {
-                const sellerInfo = JSON.parse(localStorage.getItem(SELLER_INFO_KEY)) || DEFAULT_SELLER_INFO;
+                 const sellerInfo = invoice.sellerInfo; // Use seller info from the invoice itself
 
                  const itemsHtml = invoice.items.map(item => `
                     <tr class="border-b">
@@ -415,11 +455,16 @@
                     : '';
 
                 const clientAddressHtml = invoice.clientAddress ? `<p class="text-gray-600">${invoice.clientAddress}</p>` : '';
+                
+                const paymentDetailsHtml = invoice.paymentDetails ? `<p class="text-sm text-gray-500">${invoice.paymentDetails}</p>` : '';
+
+                const notesHtml = invoice.notes ? `<div class="mt-4"><h4 class="font-semibold">הערות:</h4><p class="text-sm text-gray-600">${invoice.notes.replace(/\n/g, '<br>')}</p></div>` : '';
+
 
                 return `
                     <html lang="he" dir="rtl">
                     <head>
-                        <title>חשבונית עסקה #${invoice.number}</title>
+                        <title>חשבונית מס #${invoice.number}</title>
                         <script src="https://cdn.tailwindcss.com"><\/script>
                         <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;700&display=swap" rel="stylesheet">
                         <style>
@@ -436,16 +481,20 @@
                             ${canceledWatermark}
                             <header class="flex justify-between items-start pb-6 border-b">
                                 <div>
-                                    <h1 class="text-4xl font-bold text-gray-800">חשבונית עסקה</h1>
-                                    <p class="text-gray-500"><span class="font-semibold">מספר:</span> ${invoice.number}</p>
+                                    <h1 class="text-4xl font-bold text-gray-800">חשבונית מס</h1>
+                                    <p class="text-xs text-gray-500">העתק נאמן למקור</p>
+                                    <p class="text-gray-500 mt-2"><span class="font-semibold">מספר:</span> ${invoice.number}</p>
                                     <p class="text-gray-500"><span class="font-semibold">תאריך:</span> ${new Date(invoice.date).toLocaleDateString('he-IL')}</p>
                                 </div>
-                                <div class="text-right">
-                                    <h2 class="text-xl font-bold">${sellerInfo.name}</h2>
-                                    <p>${sellerInfo.address}</p>
-                                    <p><span class="font-semibold">טלפון:</span> ${sellerInfo.phone}</p>
-                                    <p><span class="font-semibold">אימייל:</span> ${sellerInfo.email}</p>
-                                    <p class="font-semibold">מספר עוסק: ${sellerInfo.businessNumber}</p>
+                                <div class="text-right flex items-center gap-4">
+                                    <div class="flex-grow">
+                                        <h2 class="text-xl font-bold">${sellerInfo.name}</h2>
+                                        <p>${sellerInfo.address}</p>
+                                        <p><span class="font-semibold">טלפון:</span> ${sellerInfo.phone}</p>
+                                        <p><span class="font-semibold">אימייל:</span> ${sellerInfo.email}</p>
+                                        <p class="font-semibold">מספר עוסק: ${sellerInfo.businessNumber}</p>
+                                    </div>
+                                    <img src="images/logo.gif" alt="לוגו" class="h-20 w-20 object-contain">
                                 </div>
                             </header>
                             <section class="my-8">
@@ -472,6 +521,8 @@
                                 <div>
                                     <h4 class="font-semibold">אמצעי תשלום:</h4>
                                     <p>${invoice.paymentMethod}</p>
+                                    ${paymentDetailsHtml}
+                                    ${notesHtml}
                                 </div>
                                 <div class="w-1/3">
                                     <div class="flex justify-between text-xl font-bold">
@@ -518,9 +569,12 @@
                     clientName: clientNameInput.value.trim(),
                     clientAddress: clientAddressInput.value.trim(),
                     paymentMethod: paymentMethodInput.value,
+                    paymentDetails: paymentDetailsInput.value.trim(),
+                    notes: invoiceNotesInput.value.trim(),
                     items: items,
                     total: parseFloat(totalAmountSpan.textContent).toFixed(2),
-                    isCanceled: currentEditingId ? invoiceManager.getInvoiceById(currentEditingId).isCanceled : false
+                    isCanceled: currentEditingId ? invoiceManager.getInvoiceById(currentEditingId).isCanceled : false,
+                    sellerInfo: getSellerInfoFromForm() // Save a snapshot of seller info with the invoice
                 };
 
                 if (invoiceManager.addOrUpdateInvoice(invoiceData)) {
@@ -566,11 +620,9 @@
             });
 
             // --- Initial Load ---
-            loadSellerDetails();
             resetForm();
             renderInvoiceHistory();
         });
     </script>
 </body>
 </html>
-
